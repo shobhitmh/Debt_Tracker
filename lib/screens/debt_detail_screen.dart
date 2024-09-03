@@ -70,6 +70,7 @@ class _DebtDetailScreenState extends State<DebtDetailScreen> {
   @override
   Widget build(BuildContext context) {
     // Ensure debt is not null before rendering the UI
+    // ignore: unnecessary_null_comparison
     if (debt == null) {
       return Scaffold(
         appBar: AppBar(

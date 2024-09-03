@@ -1,6 +1,7 @@
 // lib/screens/add_debt_screen.dart
 
 import 'package:flutter/material.dart';
+// ignore: unused_import
 import 'package:hive/hive.dart';
 import '../models/debt.dart';
 import '../services/database_service.dart';

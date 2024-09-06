@@ -1,5 +1,3 @@
-// lib/screens/debt_detail_screen.dart
-
 import 'package:flutter/material.dart';
 import 'package:hive/hive.dart';
 import '../models/debt.dart';
@@ -12,7 +10,7 @@ class DebtDetailScreen extends StatefulWidget {
 
 class _DebtDetailScreenState extends State<DebtDetailScreen> {
   final _repaymentController = TextEditingController();
-  late Debt debt; // Ensure debt is declared as late
+  late Debt debt;
 
   final DatabaseService _databaseService = DatabaseService();
 
@@ -20,12 +18,10 @@ class _DebtDetailScreenState extends State<DebtDetailScreen> {
   void didChangeDependencies() {
     super.didChangeDependencies();
 
-    // Properly retrieve the debt object passed as an argument
     final args = ModalRoute.of(context)!.settings.arguments;
     if (args is Debt) {
       debt = args;
     } else {
-      // Handle the error or provide fallback logic if needed
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(content: Text('Error: Unable to retrieve debt details')),
       );
@@ -33,7 +29,6 @@ class _DebtDetailScreenState extends State<DebtDetailScreen> {
     }
   }
 
-  // Function to handle debt repayment
   void _repayDebt() {
     final repaymentAmount = double.tryParse(_repaymentController.text);
     if (repaymentAmount == null || repaymentAmount <= 0) {
@@ -43,23 +38,19 @@ class _DebtDetailScreenState extends State<DebtDetailScreen> {
       return;
     }
 
-    // Update the debt amount
     setState(() {
       debt.amount -= repaymentAmount;
       if (debt.amount < 0) {
-        debt.amount = 0; // Ensure the debt amount doesn't go below zero
+        debt.amount = 0;
       }
     });
 
-    // Save the updated debt in Hive
     final debtBox = Hive.box<Debt>('debts');
     final index = debtBox.values.toList().indexOf(debt);
     _databaseService.updateDebt(index, debt);
 
-    // Clear the repayment controller
     _repaymentController.clear();
 
-    // Show a confirmation message
     ScaffoldMessenger.of(context).showSnackBar(
       SnackBar(
           content: Text(
@@ -69,8 +60,6 @@ class _DebtDetailScreenState extends State<DebtDetailScreen> {
 
   @override
   Widget build(BuildContext context) {
-    // Ensure debt is not null before rendering the UI
-    // ignore: unnecessary_null_comparison
     if (debt == null) {
       return Scaffold(
         appBar: AppBar(

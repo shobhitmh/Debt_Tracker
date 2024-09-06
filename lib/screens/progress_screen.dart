@@ -26,10 +26,8 @@ class ProgressScreen extends StatelessWidget {
       );
     }
 
-    // Calculate the total debt
     double totalDebt = debts.fold(0, (sum, debt) => sum + debt.amount);
 
-    // Create PieChartSectionData list
     List<PieChartSectionData> sections = debts.map((debt) {
       double percentage = (debt.amount / totalDebt) * 100;
 
@@ -80,7 +78,6 @@ class ProgressScreen extends StatelessWidget {
   }
 
   Color _getColorForDebt(Debt debt) {
-    // Simple color logic based on remaining amount; adjust as needed
     if (debt.amount < 100) return Colors.blue;
     if (debt.amount < 500) return Colors.blue;
     return Colors.blue;

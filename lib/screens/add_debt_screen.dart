@@ -1,7 +1,5 @@
-// lib/screens/add_debt_screen.dart
-
 import 'package:flutter/material.dart';
-// ignore: unused_import
+
 import 'package:hive/hive.dart';
 import '../models/debt.dart';
 import '../services/database_service.dart';
@@ -16,7 +14,7 @@ class _AddDebtScreenState extends State<AddDebtScreen> {
   final _amountController = TextEditingController();
   final _interestRateController = TextEditingController();
   final _minimumPaymentController = TextEditingController();
-  final _dueDateController = TextEditingController(); // Added controller
+  final _dueDateController = TextEditingController();
   DateTime? _dueDate;
   final DatabaseService _databaseService = DatabaseService();
 
@@ -31,8 +29,7 @@ class _AddDebtScreenState extends State<AddDebtScreen> {
     if (selectedDate != null && selectedDate != _dueDate) {
       setState(() {
         _dueDate = selectedDate;
-        _dueDateController.text =
-            '${_dueDate!.toLocal()}'.split(' ')[0]; // Update the controller
+        _dueDateController.text = '${_dueDate!.toLocal()}'.split(' ')[0];
       });
     }
   }
@@ -99,7 +96,7 @@ class _AddDebtScreenState extends State<AddDebtScreen> {
                 onTap: _selectDueDate,
                 child: AbsorbPointer(
                   child: TextField(
-                    controller: _dueDateController, // Set the controller here
+                    controller: _dueDateController,
                     decoration: InputDecoration(
                       labelText: 'Due Date',
                       hintText: 'Select a due date',

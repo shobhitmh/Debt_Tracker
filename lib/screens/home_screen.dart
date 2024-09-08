@@ -22,6 +22,65 @@ class _HomeScreenState extends State<HomeScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      drawer: Drawer(
+        backgroundColor: Color.fromARGB(255, 137, 191, 236),
+        child: Column(
+          children: [
+            Padding(
+              padding: EdgeInsets.only(top: 180.0),
+              child: Column(
+                children: [
+                  Icon(
+                    Icons.money,
+                    size: 100,
+                  ),
+                  Text(
+                    'Debt Tracker',
+                    style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+                  ),
+                ],
+              ),
+            ),
+            Divider(),
+            SizedBox(
+              height: 10,
+            ),
+            Column(
+              children: [
+                Card(
+                  color: Colors.white,
+                  child: ListTile(
+                    onTap: () {
+                      Navigator.pop(context);
+                      Navigator.of(context).push(MaterialPageRoute(
+                          builder: (context) => HomeScreen()));
+                    },
+                    trailing: Icon(Icons.arrow_right_rounded),
+                    title: Text('Home'),
+                  ),
+                ),
+                Card(
+                  child: ListTile(
+                    onTap: () {
+                      Navigator.pop(context);
+                      Navigator.of(context).push(MaterialPageRoute(
+                          builder: (context) => ProgressScreen()));
+                    },
+                    trailing: Icon(Icons.arrow_right_rounded),
+                    title: Text('Progress Screen'),
+                  ),
+                ),
+                Card(
+                  child: ListTile(
+                    trailing: Icon(Icons.arrow_right_rounded),
+                    title: Text('Setting'),
+                  ),
+                ),
+              ],
+            )
+          ],
+        ),
+      ),
       appBar: AppBar(
         actions: [
           IconButton(
@@ -29,7 +88,10 @@ class _HomeScreenState extends State<HomeScreen> {
                 Navigator.of(context).push(
                     MaterialPageRoute(builder: (context) => ProgressScreen()));
               },
-              icon: Icon(Icons.pie_chart_outline))
+              icon: const Icon(
+                Icons.pie_chart_outline,
+                color: Colors.white,
+              ))
         ],
         backgroundColor: Colors.blue,
         title: Text(

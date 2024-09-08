@@ -46,6 +46,15 @@ class ProgressScreen extends StatelessWidget {
 
     return Scaffold(
       appBar: AppBar(
+        leading: GestureDetector(
+          onTap: () {
+            Navigator.pop(context);
+          },
+          child: Icon(
+            Icons.arrow_back_ios,
+            color: Colors.white,
+          ),
+        ),
         backgroundColor: Colors.blue,
         title: Text(
           'Debt Payoff Progress',

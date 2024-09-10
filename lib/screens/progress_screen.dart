@@ -26,23 +26,8 @@ class ProgressScreen extends StatelessWidget {
       );
     }
 
-    double totalDebt = debts.fold(0, (sum, debt) => sum + debt.amount);
-
-    List<PieChartSectionData> sections = debts.map((debt) {
-      double percentage = (debt.amount / totalDebt) * 100;
-
-      return PieChartSectionData(
-        value: percentage,
-        title: '${debt.name}: ${percentage.toStringAsFixed(1)}%',
-        color: _getColorForDebt(debt),
-        radius: 100,
-        titleStyle: TextStyle(
-          fontSize: 14,
-          fontWeight: FontWeight.bold,
-          color: Colors.white,
-        ),
-      );
-    }).toList();
+    double maxDebt =
+        debts.fold(0, (max, debt) => debt.amount > max ? debt.amount : max);
 
     return Scaffold(
       appBar: AppBar(
@@ -62,25 +47,70 @@ class ProgressScreen extends StatelessWidget {
         ),
       ),
       body: Padding(
-        padding: const EdgeInsets.all(16.0),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Text(
-              'Payoff Progress',
-              style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
-            ),
-            SizedBox(height: 20),
-            Expanded(
-              child: PieChart(
-                PieChartData(
-                  sections: sections,
-                  centerSpaceRadius: 55,
-                  sectionsSpace: 4,
+        padding: const EdgeInsets.only(top: 10.0),
+        child: SingleChildScrollView(
+          scrollDirection: Axis.horizontal,
+          child: SizedBox(
+            width:
+                debts.length * 80.0, // Adjust width based on the number of bars
+            child: BarChart(
+              BarChartData(
+                barGroups: debts.asMap().entries.map((entry) {
+                  int index = entry.key;
+                  Debt debt = entry.value;
+                  return BarChartGroupData(
+                    x: index,
+                    barRods: [
+                      BarChartRodData(
+                        toY: debt.amount,
+                        color: _getColorForDebt(debt),
+                        width: 20,
+                        borderRadius: BorderRadius.circular(4),
+                        backDrawRodData: BackgroundBarChartRodData(
+                          show: true,
+                          color: Colors.grey[300],
+                          toY: (maxDebt + maxDebt * 0.3),
+                        ),
+                      ),
+                    ],
+                    showingTooltipIndicators: [0],
+                  );
+                }).toList(),
+                titlesData: FlTitlesData(
+                  leftTitles: AxisTitles(
+                    sideTitles: SideTitles(showTitles: false),
+                  ),
+                  bottomTitles: AxisTitles(
+                    sideTitles: SideTitles(
+                      showTitles: true,
+                      reservedSize: 40,
+                      getTitlesWidget: (double value, TitleMeta meta) {
+                        final debt = debts[value.toInt()];
+                        return Padding(
+                          padding: const EdgeInsets.only(top: 8.0),
+                          child: Text(
+                            debt.name,
+                            style: TextStyle(
+                              color: Colors.black,
+                              fontWeight: FontWeight.bold,
+                            ),
+                          ),
+                        );
+                      },
+                    ),
+                  ),
+                ),
+                gridData: FlGridData(show: true),
+                borderData: FlBorderData(show: false),
+                barTouchData: BarTouchData(
+                  touchTooltipData: BarTouchTooltipData(
+                    tooltipPadding: const EdgeInsets.all(8.0),
+                    tooltipMargin: 8,
+                  ),
                 ),
               ),
             ),
-          ],
+          ),
         ),
       ),
     );
@@ -88,7 +118,7 @@ class ProgressScreen extends StatelessWidget {
 
   Color _getColorForDebt(Debt debt) {
     if (debt.amount < 100) return Colors.blue;
-    if (debt.amount < 500) return Colors.blue;
-    return Colors.blue;
+    if (debt.amount < 500) return Colors.orange;
+    return Colors.red;
   }
 }

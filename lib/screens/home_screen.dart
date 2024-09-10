@@ -47,33 +47,51 @@ class _HomeScreenState extends State<HomeScreen> {
             ),
             Column(
               children: [
-                Card(
-                  color: Colors.white,
-                  child: ListTile(
-                    onTap: () {
-                      Navigator.pop(context);
-                      Navigator.of(context).push(MaterialPageRoute(
-                          builder: (context) => HomeScreen()));
-                    },
-                    trailing: Icon(Icons.arrow_right_rounded),
-                    title: Text('Home'),
+                Padding(
+                  padding: const EdgeInsets.only(left: 10.0, right: 10),
+                  child: Card(
+                    color: Colors.white,
+                    child: ListTile(
+                      onTap: () {
+                        Navigator.pop(context);
+                        Navigator.of(context).push(MaterialPageRoute(
+                            builder: (context) => HomeScreen()));
+                      },
+                      trailing: Icon(Icons.arrow_right_rounded),
+                      title: Text(
+                        'Home',
+                        style: TextStyle(fontWeight: FontWeight.bold),
+                      ),
+                    ),
                   ),
                 ),
-                Card(
-                  child: ListTile(
-                    onTap: () {
-                      Navigator.pop(context);
-                      Navigator.of(context).push(MaterialPageRoute(
-                          builder: (context) => ProgressScreen()));
-                    },
-                    trailing: Icon(Icons.arrow_right_rounded),
-                    title: Text('Progress Screen'),
+                Padding(
+                  padding: const EdgeInsets.only(left: 10.0, right: 10),
+                  child: Card(
+                    child: ListTile(
+                      onTap: () {
+                        Navigator.pop(context);
+                        Navigator.of(context).push(MaterialPageRoute(
+                            builder: (context) => ProgressScreen()));
+                      },
+                      trailing: Icon(Icons.arrow_right_rounded),
+                      title: Text(
+                        'Progress Screen',
+                        style: TextStyle(fontWeight: FontWeight.bold),
+                      ),
+                    ),
                   ),
                 ),
-                Card(
-                  child: ListTile(
-                    trailing: Icon(Icons.arrow_right_rounded),
-                    title: Text('Setting'),
+                Padding(
+                  padding: const EdgeInsets.only(left: 10.0, right: 10),
+                  child: Card(
+                    child: ListTile(
+                      trailing: Icon(Icons.arrow_right_rounded),
+                      title: Text(
+                        'Setting',
+                        style: TextStyle(fontWeight: FontWeight.bold),
+                      ),
+                    ),
                   ),
                 ),
               ],
